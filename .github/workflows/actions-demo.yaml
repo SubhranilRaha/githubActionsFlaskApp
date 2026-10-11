@@ -22,10 +22,10 @@ jobs:
         with:
           context: .
           push: true
-          tags: subhranil/subhranil-flask-app:v1.0.0
+          tags: subhranil4240/subhranil-flask-app:v1.0.0
 
       - name: Run Docker Container
-        run: docker run -d -p 5000:5000 --name raha-container subhranil/subhranil-flask-app:v1.0.0
+        run: docker run -d -p 5000:5000 --name raha-container subhranil4240/subhranil-flask-app:v1.0.0
 
       - name: Smoke Test
         run: |
