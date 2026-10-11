@@ -10,14 +10,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Build Docker Image
-        run: docker build -t flask-app:v1.0.0 .
+    
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+    
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: subhranil/subhranil-flask-app:v1.0.0
 
       - name: Run Docker Container
-        run: docker run -d --name flask-app-container -p 5000:5000 flask-app:v1.0.0
+        run: docker run -d -p 5000:5000 --name raha-container subhranil/subhranil-flask-app:v1.0.0
 
       - name: Smoke Test
         run: |
           sleep 5
-          curl --fail http://localhost:5000/health
+          curl --fail http://localhost:5000
